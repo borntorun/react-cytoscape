@@ -1,0 +1,105 @@
+{
+  "name": "react-cytoscape",
+  "version": "0.0.1",
+  "description": "A React.js component wrapper for Cytoscape.js",
+  "main": "lib/index.js",
+  "repository": {
+    "url": "https://github.com/borntorun/react-cytoscape.git",
+    "type": "git"
+  },
+  "peerDependencies": {
+    "cytoscape": "^3.1.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>[/\\\\](build|dist|docs|node_modules|scripts)[/\\\\]"
+    ],
+    "testEnvironment": "node",
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web"
+    }
+  },
+  "scripts": {
+    "test": "node scripts/test.js --env=jsdom",
+    "start": "NODE_ENV=development webpack-dev-server --config ./webpack/webpack.config.babel.js --progress",
+    "prebuild": "yarn run clean",
+    "build": "NODE_ENV=production webpack  --config ./webpack/webpack.config.babel.js --progress --display-modules",
+    "clean": "rimraf ./build && mkdir build",
+    "lint": "./node_modules/.bin/eslint 'src/**/*.@(js|jsx)'"
+  },
+  "dependencies": {},
+  "author": "João Carvalho <jmmtcarvalho@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "cytoscape",
+    "component",
+    "react-component",
+    "graph",
+    "visualization"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.3",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "css-loader": "^0.28.2",
+    "doiuse": "^3.0.0",
+    "dotenv": "^4.0.0",
+    "enzyme": "^2.8.2",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-jest": "^20.0.3",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-react": "^7.0.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^20.0.4",
+    "object-assign": "^4.1.1",
+    "postcss-clean": "^1.0.2",
+    "postcss-cssnext": "^2.11.0",
+    "postcss-loader": "^2.0.5",
+    "prop-types": "^15.5.10",
+    "react-addons-test-utils": "^15.5.1",
+    "react-hot-loader": "3.0.0-beta.6",
+    "react-test-renderer": "^15.5.4",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.18.1",
+    "stylelint": "^7.10.1",
+    "stylelint-config-standard": "^16.0.0",
+    "uglify-js": "^3.0.11",
+    "uglifyjs-webpack-plugin": "^0.4.3",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5",
+    "webpack-merge": "^4.1.0",
+    "whatwg-fetch": "^2.0.3"
+  }
+}
