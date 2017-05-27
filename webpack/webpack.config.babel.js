@@ -34,7 +34,7 @@ export default merge({
         include: [ path.join(ROOT_DIR, 'src') ],
         use: [
           'style-loader',
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'css-loader?importLoaders=1',
           'postcss-loader?sourceMap=inline'
         ]
       }
@@ -44,3 +44,6 @@ export default merge({
   context: path.resolve(__dirname, 'src'),
   target: 'web'
 }, CONFIG);
+
+
+//'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
