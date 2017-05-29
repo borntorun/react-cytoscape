@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Cytoscape = (props) => {
+const CytoscapeRender = (props) => {
   const {cyContainerRef, ...otherProps} = props;
   return (
     <div 
@@ -11,12 +11,12 @@ const Cytoscape = (props) => {
   );  
 };
 
-Cytoscape.propTypes = {
+CytoscapeRender.propTypes = {
   cyContainerRef: PropTypes.func.isRequired,
   className: PropTypes.string,
   style: PropTypes.object,
 };
 
-Cytoscape.displayName = 'Cytoscape';
+CytoscapeRender.displayName = 'CytoscapeRender';
 
-export default Cytoscape;
+export default CytoscapeRender;

@@ -24,7 +24,7 @@ const config = {
     new UglifyJSPlugin({
       mangle: {
         // Skip mangling these
-        except: ['Cytoscape','CytoscapeContainer']
+        except: ['CytoscapeRender','CytoscapeContainer']
       }
     })
 
