@@ -8,14 +8,15 @@ const style = getStyle();
 const App = () => {
   
   const cyOptions = {
-    elements: data,
-    style: style,
+    // elements: data,
+    // style: style,
     zoom: 0.5,
     minZoom: 0.5,
-    maxZoom: 1    
+    maxZoom: 1
   };
 
   return (
+    
     <Cytoscape 
       className='ole'
       style={{width:'100%', height: '100vh'}}
@@ -24,9 +25,40 @@ const App = () => {
         console.log('on cy destroy', this, event);
       }}
       onCyReady={function(event){
+
         console.log('on cy ready', this, event);
+        const cy = this;
+
+        this.on('tap', 'node', function(evt){
+          console.log('tap');
+          console.log( 'this_ ', this);
+          console.log( 'evt_ ', evt);
+          cy.elements().addClass('hideit');
+          cy.elements().removeClass('showit');
+
+          this.connectedEdges()
+            .forEach(function(item){
+              
+              item.toggleClass('hideit');
+              item.toggleClass('showit');
+            });
+
+          this.connectedEdges()
+            .connectedNodes()
+            .filter(function(item){
+              return item !== this;
+            })
+            .forEach(function(item){
+              item.toggleClass('hideit');
+              
+              item.toggleClass('showit');
+            });
+          
+        });
+
       }}
-    />);
+    />
+    );
 };
 
 export default App;
@@ -38,10 +70,10 @@ export default App;
 function getData() {
   return [{
     'data' : {
-      'name' : 'Javascript',
-      'id' : '50',
+      'name' : 'Node 1',
+      'id' : '1',
       'value' : 0.00375,
-      'idInt' : 50
+      'idInt' : 1
     },
     
     'group' : 'nodes',
@@ -54,7 +86,40 @@ function getData() {
     'classes' : 'xpto'
   }, {
     'data' : {
-      'name' : 'Angular',
+      'name' : 'Node 2',
+      'id' : '2',
+      'value' : 0.00325,
+      'idInt' : 2
+    },
+
+    'group' : 'nodes',
+    'removed' : false,
+    'selected' : false,
+    'selectable' : true,
+    'locked' : false,
+    'grabbed' : false,
+    'grabbable' : true,
+    'classes' : 'xpto'
+  }, {
+    'data' : {
+      'name' : 'Node 3',
+      'id' : '3',
+      'value' : 0.00325,
+      'idInt' : 3
+    },
+
+    'group' : 'nodes',
+    'removed' : false,
+    'selected' : false,
+    'selectable' : true,
+    'locked' : false,
+    'grabbed' : false,
+    'grabbable' : true,
+    'classes' : 'xpto'
+  }, 
+  {
+    'data' : {
+      'name' : 'Node 4',
       'id' : '4',
       'value' : 0.00325,
       'idInt' : 4
@@ -68,45 +133,12 @@ function getData() {
     'grabbed' : false,
     'grabbable' : true,
     'classes' : 'xpto'
-  }, {
-    'data' : {
-      'name' : 'Xpto',
-      'id' : '44',
-      'value' : 0.00325,
-      'idInt' : 4
-    },
-
-    'group' : 'nodes',
-    'removed' : false,
-    'selected' : false,
-    'selectable' : true,
-    'locked' : false,
-    'grabbed' : false,
-    'grabbable' : true,
-    'classes' : 'xpto'
   }, 
   {
     'data' : {
-      'name' : 'Angular 999',
-      'id' : '444',
-      'value' : 0.00325,
-      'idInt' : 4
-    },
-
-    'group' : 'nodes',
-    'removed' : false,
-    'selected' : false,
-    'selectable' : true,
-    'locked' : false,
-    'grabbed' : false,
-    'grabbable' : true,
-    'classes' : 'xpto'
-  }, 
-  {
-    'data' : {
-      'source' : '4',
-      'target' : '50',
-      'id' : 'e-4-50',
+      'source' : '1',
+      'target' : '2',
+      'id' : 'e-1-2',
       'value' : null,
       'weight': 1
     },
@@ -150,30 +182,6 @@ function getStyle() {
       'opacity' : '0.5'
     }
   }, {
-    'selector' : 'node[keywords*=\'open source\']',
-    'style' : {
-      'display' : 'element',
-
-      'opacity' : '1'
-    }
-  }, {
-    'selector' : 'node[?attr]',
-    'style' : {
-      'shape' : 'rectangle',
-      'background-color' : '#aaa',
-      'text-outline-color' : '#aaa',
-      'width' : '16px',
-      'height' : '16px',
-      'font-size' : '6px',
-      'z-index' : '1'
-    }
-  }, {
-    'selector' : 'node[?query]',
-    'style' : {
-      'background-clip' : 'none',
-      'background-fit' : 'contain'
-    }
-  }, {
     'selector' : 'node:selected',
     'style' : {
       'border-width' : '6px',
@@ -215,66 +223,6 @@ function getStyle() {
       'border-opacity' : '0.5',
       'background-color' : '#394855',
       'text-outline-color' : '#394855'
-    }
-  }, {
-    'selector' : 'edge.filtered',
-    'style' : {
-      'opacity' : '0'
-    }
-  }, {
-    'selector' : 'edge[group=\'coexp\']',
-    'style' : {
-      'line-color' : '#d0b7d5'
-    }
-  }, {
-    'selector' : 'edge[group=\'coloc\']',
-    'style' : {
-      'line-color' : '#a0b3dc'
-    }
-  }, {
-    'selector' : 'edge[group=\'gi\']',
-    'style' : {
-      'line-color' : '#90e190'
-    }
-  }, {
-    'selector' : 'edge[group=\'path\']',
-    'style' : {
-      'line-color' : '#9bd8de'
-    }
-  }, {
-    'selector' : 'edge[group=\'pi\']',
-    'style' : {
-      'line-color' : '#eaa2a2'
-    }
-  }, {
-    'selector' : 'edge[group=\'predict\']',
-    'style' : {
-      'line-color' : '#f6c384'
-    }
-  }, {
-    'selector' : 'edge[group=\'spd\']',
-    'style' : {
-      'line-color' : '#dad4a2'
-    }
-  }, {
-    'selector' : 'edge[group=\'spd_attr\']',
-    'style' : {
-      'line-color' : '#D0D0D0'
-    }
-  }, {
-    'selector' : 'edge[group=\'reg\']',
-    'style' : {
-      'line-color' : '#D0D0D0'
-    }
-  }, {
-    'selector' : 'edge[group=\'reg_attr\']',
-    'style' : {
-      'line-color' : '#D0D0D0'
-    }
-  }, {
-    'selector' : 'edge[group=\'user\']',
-    'style' : {
-      'line-color' : '#f0ec86'
     }
   }, {
     'selector' : 'node.showit',

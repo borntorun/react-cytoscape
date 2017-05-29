@@ -15,8 +15,7 @@ class CytoscapeContainer extends React.Component {
     };
 
     this.setCyInstance = this.setCyInstance.bind(this);
-    this.unsetCyInstance = this.unsetCyInstance.bind(this);
-    this.fetchData = this.fetchData.bind(this);
+    this.unsetCyInstance = this.unsetCyInstance.bind(this);    
   }
   
   unsetCyInstance() {
@@ -25,55 +24,42 @@ class CytoscapeContainer extends React.Component {
     }
     return this;
   }
-  setCyInstance(elements, style, options) {
+  setCyInstance() {
     
-    const setOptions = {
-      // set container for rendering (get from ref in Cytoscape component)
-      container: this.cyContainer,
-      // set elements and style
-      elements: elements,
-      style: style,
-      // other options
-      ...options      
-    };
-    
-    const cy = Cy(setOptions);
+    const {elements, style, layout, ...options} = Object.assign({}, this.props.cyOptions);
+
+    // TODO: something with elements, style, layout .. state?
+
+    const ccc = Object.assign({}, 
+      {container: this.cyContainer }, 
+      elements ? {elements} : {}, style ? {style} : {}, layout ? {layout} : {}, 
+      options? {...options} : {}
+    );
+    console.log('ccc', ccc);
+    const cy = Cy(ccc);
     
     this.setState({
       cy: cy
     }); 
     
-    cy.ready(this.props.onCyReady.bind(cy));
-    cy.on('destroy', this.props.onCyDestroy.bind(cy));
-  }
-  fetchData(elements, style, options) {
-    Promise.all([elements, style]
-      .map(item => item && typeof item === 'string'?
-        doFetch(item).then(result) : 
-        (item && (Array.isArray(item) || typeof item.then === 'function')?
-          Promise.resolve(item)
-          :
-          Promise.resolve(undefined)
-        )        
-      )
-    )
-      .then((result) => {
-        this
-          .unsetCyInstance()
-          .setCyInstance(result[0], result[1], options); 
-      });
-  }
-  componentWillReceiveProps(nextProps) {
-    const {elements, style, ...options} = nextProps.cyOptions;
-    
-    if (elements !== this.props.cyOptions.elements || style !== this.props.cyOptions.style) {
-      this.fetchData(elements, style, options);
+    if (typeof this.props.onCyReady === 'function') { 
+      cy.ready(this.props.onCyReady.bind(cy));
     }
+    if (typeof this.props.onCyDestroy === 'function') {
+      cy.on('destroy', this.props.onCyDestroy.bind(cy));
+    } 
+  }
+  componentWillReceiveProps() {
+    // TODO?
+  }
+  shouldComponentUpdate() {
+    // TODO?
+    return true;
   }
   componentDidMount() {
-    const {elements, style, ...options} = this.props.cyOptions;
-    
-    this.fetchData(elements, style, options);
+    this
+      .unsetCyInstance()
+      .setCyInstance();
   }
   render() {
     const {className, style} = this.props;
@@ -97,13 +83,5 @@ CytoscapeContainer.propTypes = {
 };
 
 CytoscapeContainer.displayName = 'CytoscapeContainer';
-
-function result(res) {
-  return res.json();
-}
-
-function doFetch(url, options = {mode: 'no-cors'}) {
-  return fetch(url, options);
-}
 
 export default CytoscapeContainer;
