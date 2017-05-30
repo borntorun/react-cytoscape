@@ -8,8 +8,8 @@ const style = getStyle();
 const App = () => {
   
   const cyOptions = {
-    // elements: data,
-    // style: style,
+    elements: data,
+    style: style,
     zoom: 0.5,
     minZoom: 0.5,
     maxZoom: 1
@@ -58,7 +58,7 @@ const App = () => {
 
       }}
     />
-    );
+  );
 };
 
 export default App;
