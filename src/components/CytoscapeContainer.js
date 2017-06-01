@@ -8,6 +8,7 @@ class CytoscapeContainer extends React.Component {
   constructor(props) {
     super(props);
   
+    
     // set initial state
     //  cy: cytoscape instance
     this.state = {
@@ -19,14 +20,14 @@ class CytoscapeContainer extends React.Component {
   }
   
   unsetCyInstance() {
-    console.log('unsetCyInstance');
+    console.log('CytoscapeContainer unsetCyInstance');
     if (this.state.cy != null) {
-      console.log('call destroy');
+      console.log('CytoscapeContainer call destroy');
       this.state.cy.destroy();
     }
   }
   setCyInstance() {
-    console.log('setCyInstance');
+    console.log('CytoscapeContainer setCyInstance');
     const {elements, style, layout, ...options} = Object.assign({}, this.props.cyOptions);
 
     const cy = Cy(Object.assign({}, 
@@ -46,14 +47,13 @@ class CytoscapeContainer extends React.Component {
       cy.on('destroy', this.props.onCyDestroy.bind(cy));
     } 
   }
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps(nextProps) {
     // TODO?
 
     // just a test
-    console.log('componentWillReceiveProps', newProps);
+    console.log('CytoscapeContainer componentWillReceiveProps', nextProps);
     this.unsetCyInstance();
     this.setCyInstance();
-
   }
   shouldComponentUpdate() {
     // TODO?
@@ -64,14 +64,13 @@ class CytoscapeContainer extends React.Component {
     this.setCyInstance();
   }
   render() {
-    console.log('render', this.props);
+    console.log('CytoscapeContainer render', this.props);
     const {className, style} = this.props;
     return (
       <CytoscapeRender
         {...className ? {className} : {}}
         {...style ? {style} : {}}
-        cyContainerRef={el => this.cyContainer = el}
-        {...this.otherProps}
+        cyContainerRef={el => this.cyContainer = el}        
       />
     );
   }
