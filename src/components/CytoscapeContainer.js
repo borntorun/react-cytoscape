@@ -19,13 +19,14 @@ class CytoscapeContainer extends React.Component {
   }
   
   unsetCyInstance() {
+    console.log('unsetCyInstance');
     if (this.state.cy != null) {
+      console.log('call destroy');
       this.state.cy.destroy();
     }
-    return this;
   }
   setCyInstance() {
-    
+    console.log('setCyInstance');
     const {elements, style, layout, ...options} = Object.assign({}, this.props.cyOptions);
 
     const cy = Cy(Object.assign({}, 
@@ -45,13 +46,13 @@ class CytoscapeContainer extends React.Component {
       cy.on('destroy', this.props.onCyDestroy.bind(cy));
     } 
   }
-  componentWillReceiveProps() {
+  componentWillReceiveProps(newProps) {
     // TODO?
 
     // just a test
-    this
-      .unsetCyInstance()
-      .setCyInstance();
+    console.log('componentWillReceiveProps', newProps);
+    this.unsetCyInstance();
+    this.setCyInstance();
 
   }
   shouldComponentUpdate() {
@@ -59,11 +60,11 @@ class CytoscapeContainer extends React.Component {
     return true;
   }
   componentDidMount() {
-    this
-      .unsetCyInstance()
-      .setCyInstance();
+    this.unsetCyInstance();
+    this.setCyInstance();
   }
   render() {
+    console.log('render', this.props);
     const {className, style} = this.props;
     return (
       <CytoscapeRender
