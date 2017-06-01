@@ -28,15 +28,11 @@ class CytoscapeContainer extends React.Component {
     
     const {elements, style, layout, ...options} = Object.assign({}, this.props.cyOptions);
 
-    // TODO: something with elements, style, layout .. state?
-
-    const ccc = Object.assign({}, 
+    const cy = Cy(Object.assign({}, 
       {container: this.cyContainer }, 
       elements ? {elements} : {}, style ? {style} : {}, layout ? {layout} : {}, 
       options? {...options} : {}
-    );
-    console.log('ccc', ccc);
-    const cy = Cy(ccc);
+    ));
     
     this.setState({
       cy: cy
@@ -51,6 +47,12 @@ class CytoscapeContainer extends React.Component {
   }
   componentWillReceiveProps() {
     // TODO?
+
+    // just a test
+    this
+      .unsetCyInstance()
+      .setCyInstance();
+
   }
   shouldComponentUpdate() {
     // TODO?
