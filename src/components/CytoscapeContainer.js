@@ -41,10 +41,10 @@ class CytoscapeContainer extends React.Component {
     }); 
     
     if (typeof this.props.onCyReady === 'function') { 
-      cy.ready(this.props.onCyReady.bind(cy));
+      cy.ready(this.props.onCyReady);
     }
     if (typeof this.props.onCyDestroy === 'function') {
-      cy.on('destroy', this.props.onCyDestroy.bind(cy));
+      cy.on('destroy', this.props.onCyDestroy);
     } 
   }
   componentWillReceiveProps(nextProps) {

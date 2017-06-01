@@ -14,8 +14,6 @@ const App = () => {
     minZoom: 0.5,
     maxZoom: 1
   };
-  let onDestroy;
-  let onReady;
   return (
     
     <Cytoscape 
@@ -23,24 +21,19 @@ const App = () => {
       style={{width:'100%', height: '100vh'}}
       cyOptions={cyOptions}
       onCyDestroy={function(event){
-        onDestroy = event.cy;
-
-        console.log('on cy destroy', this, event, onReady===onDestroy);
-        
-        setTimeout(()=>console.log('after:',onDestroy, onReady===onDestroy),1000);
+        console.log(event);
       }}
       onCyReady={function(event){
+        const cy = event.cy;
 
-        console.log('on cy ready', this, event);
-        const cy = onReady= this;
-
-        this.on('tap', 'node', function(evt){
+        cy.on('tap', 'node', function(evt){
           console.log('tap');
           console.log( 'this_ ', this);
           console.log( 'evt_ ', evt);
           cy.elements().addClass('hideit');
           cy.elements().removeClass('showit');
 
+          
           this.connectedEdges()
             .forEach(function(item){
               
