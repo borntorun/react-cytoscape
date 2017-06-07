@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Cytoscape from './CytoscapeContainer';
 import './styles.css';
@@ -24,6 +25,7 @@ const App = () => {
         console.log(event);
       }}
       onCyReady={function(event){
+        
         const cy = event.cy;
 
         cy.on('tap', 'node', function(evt){
@@ -55,6 +57,13 @@ const App = () => {
         });
 
       }}
+      onResize={function(data) {
+        {/*this ----> cy*/}
+        console.log('windowSize', data.windowSize);
+        data.cy.makeLayout({name:'circle'}).run();
+      }}
+      resizeDebounceTime={2000}
+      
     />
   );
 };
